@@ -7,12 +7,13 @@ from pathlib import Path
 # Paste this file into your notebook/script and run it.
 # ============================================================
 
-DATA_DIR = Path("Dataset/Training")
-OUTPUT_FILE = "monster_hackathon_submission.csv"
+BASE_DIR = Path(__file__).resolve().parent
+DATA_DIR = BASE_DIR / "Datasets" / "Test"
+OUTPUT_FILE = BASE_DIR / "monster_hackathon_test_submission.csv"
 
 # Set this manually if you know the exact Autumn-term start date.
 # Leave as None to infer 1 September of the earliest activity year.
-AUTUMN_START = None  # Example: "2023-09-25"
+AUTUMN_START = "2023-09-30"  # Example: "2023-09-25"
 
 
 # ------------------------------------------------------------
@@ -50,13 +51,13 @@ print("DATA COLAB MINI MONSTER HACK: MONSTER DETECTION")
 print("=" * 70)
 
 lms_df = pd.read_csv(
-    DATA_DIR / "la_mmh_training_lms_item_activity_by_session_fact.csv"
+    DATA_DIR / "la_mmh_test_lms_item_activity_by_session_fact.csv"
 )
 video_df = pd.read_csv(
-    DATA_DIR / "la_mmh_training_video_activity_by_view_fact.csv"
+    DATA_DIR / "la_mmh_test_video_activity_by_view_fact.csv"
 )
-person_dim = pd.read_csv(DATA_DIR / "la_mmh_training_person_dim.csv")
-mod_fact = pd.read_csv(DATA_DIR / "la_mmh_training_person_module_instance_fact.csv")
+person_dim = pd.read_csv(DATA_DIR / "la_mmh_test_person_dim.csv")
+mod_fact = pd.read_csv(DATA_DIR / "la_mmh_test_person_module_instance_fact.csv")
 
 for df in [lms_df, video_df]:
     df["DATETIME"] = utc_datetime(df["TIMESTAMP"])
@@ -77,7 +78,7 @@ print(f"Autumn start used: {autumn_start.date()}")
 print(f"LMS rows: {len(lms_df):,}")
 print(f"Video rows: {len(video_df):,}")
 
-
+#%%
 # ------------------------------------------------------------
 # 2. THE PHANTOM: duplicate activity rows
 # ------------------------------------------------------------
